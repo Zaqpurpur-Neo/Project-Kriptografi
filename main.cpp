@@ -45,7 +45,7 @@ int usage(const char* filename) {
     std::printf("   %s compare-speed\n\n", filename);
 
     std::printf("Catatan:\n");
-    std::printf(" - Saat ini hanya huruf (A–Z) yang dapat dienkripsi.\n");
+    std::printf(" - Saat ini hanya huruf (A-Z) yang dapat dienkripsi.\n");
     std::printf(" - Angka, spasi, dan karakter unik tidak akan dienkripsi.\n");
     std::printf(" - Untuk Playfair, huruf 'J' akan digabung dengan 'I'.\n");
     std::printf(" - Gunakan 'compare-speed' untuk mengukur kecepatan kedua cipher.\n");
