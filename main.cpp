@@ -28,13 +28,30 @@ typedef struct Pair {
 	int right;
 } Pair;
 
-int usage(char* filename) {
-	std::printf("Perhatikan ya azril\n");
-	std::printf("cara pakai: %s <method> <chiper-mode>\n", filename);
-	std::printf("   method: encrypt, decrypt \n");
-	std::printf("   chiper-mode: caesar, playfair, compare-speed\n");
-	std::printf("\nCatatan: \n   untuk saat ini hanya bisa enkripsi alphabet. angka dan karakter unik tidak akan di enkripsi\n");
-	return 1;
+int usage(const char* filename) {
+    std::printf("\n=== [ Panduan Penggunaan Program Enkripsi ] ===\n");
+    std::printf("Perhatikan ya, Azril\n\n");
+
+    std::printf("Cara pakai:\n");
+    std::printf("   %s <method> <cipher-mode>\n\n", filename);
+
+    std::printf("Parameter:\n");
+    std::printf("   <method>       : encrypt | decrypt\n");
+    std::printf("   <cipher-mode>  : caesar | playfair | compare-speed\n\n");
+
+    std::printf("Contoh penggunaan:\n");
+    std::printf("   %s encrypt caesar\n", filename);
+    std::printf("   %s decrypt playfair\n", filename);
+    std::printf("   %s compare-speed\n\n", filename);
+
+    std::printf("Catatan:\n");
+    std::printf(" - Saat ini hanya huruf (A–Z) yang dapat dienkripsi.\n");
+    std::printf(" - Angka, spasi, dan karakter unik tidak akan dienkripsi.\n");
+    std::printf(" - Untuk Playfair, huruf 'J' akan digabung dengan 'I'.\n");
+    std::printf(" - Gunakan 'compare-speed' untuk mengukur kecepatan kedua cipher.\n");
+
+    std::printf("===============================================\n\n");
+    return 1;
 }
 
 void caesar(std::string content, std::string& result, Method method) {
