@@ -81,7 +81,7 @@ void caesar(std::string content, std::string& result, Method method) {
 		if(method == METHOD_ENCRYPT) {
 			shifting = (move_start_index + shift) % ALPHABET_LEN;
 		} else if (method == METHOD_DECRYPT) {
-			shifting = (move_start_index - shift + ALPHABET_LEN) % ALPHABET_LEN;
+			shifting = ((move_start_index - shift) % ALPHABET_LEN + ALPHABET_LEN) % ALPHABET_LEN;
 		}
 
 		int reset_index = shifting + indexing_mode;
@@ -191,7 +191,14 @@ void playfair(const std::string& ori_content, std::string& result, Method method
 
 	std::printf("Masukan Key: ");
 	std::cin >> raw_key;
-    
+
+    for (char c : raw_key) {
+		if(!std::isalpha(c)) {
+			std::printf("[KESALAHAN]: Karakter tidak valid '%c' terdeteksi. Playfair hanya mendukung huruf A-Z.\n", c);
+        	throw std::runtime_error("Playfair: ditemukan simbol non-alfabet"); 
+		}
+	}
+
 	std::string key = prepare_key(raw_key);
 
     std::string content;
@@ -265,13 +272,13 @@ void compare(const std::string& ori_content, Method method) {
 	
 
 	std::printf("\n[PERBEDAAN KECEPARAN]\n");
-    std::printf("Caesar Cipher   : %lld microseconds\n", caesar_time_us);
-    std::printf("Playfair Cipher : %lld microseconds\n", playfair_time_us);
+    std::printf("Caesar Cipher   : 0.%lld seconds\n", caesar_time_us);
+    std::printf("Playfair Cipher : 0.%lld seconds\n", playfair_time_us);
 
     if (caesar_time_us < playfair_time_us)
-		std::printf("=> Caesar lebih cepat %lld microseconds\n", playfair_time_us - caesar_time_us);
+		std::printf("=> Caesar lebih cepat 0.%lld microseconds\n", playfair_time_us - caesar_time_us);
     else if (playfair_time_us < caesar_time_us)
-		std::printf("=> Playfair lebih cepat %lld microseconds\n", caesar_time_us - playfair_time_us);
+		std::printf("=> Playfair lebih cepat 0.%lld microseconds\n", caesar_time_us - playfair_time_us);
     else
 		std::printf("Kecepatannya sama\n");
 }
@@ -297,6 +304,14 @@ int main(int argc, char* argv[]) {
 		std::getline(std::cin, content);
 		result.reserve(content.length());
 
+		for (char c : content) {
+			if(!std::isalpha(c)) {
+				std::printf("[KESALAHAN]: Karakter tidak valid '%c' terdeteksi. Playfair hanya mendukung huruf A-Z.\n", c);
+				return 1;
+			}
+		}
+
+
 		if(std::strcmp(chiper, "caesar") == 0) caesar(content, result, METHOD_ENCRYPT);
 		else if(std::strcmp(chiper, "playfair") == 0) {
 			try {
@@ -312,6 +327,13 @@ int main(int argc, char* argv[]) {
 		std::getline(std::cin, content);
 		result.reserve(content.length());
 
+		for (char c : content) {
+			if(!std::isalpha(c)) {
+				std::printf("[KESALAHAN]: Karakter tidak valid '%c' terdeteksi. Playfair hanya mendukung huruf A-Z.\n", c);
+				return 1;
+			}
+		}
+
 		if(std::strcmp(chiper, "caesar") == 0) caesar(content, result, METHOD_DECRYPT);
 		else if(std::strcmp(chiper, "playfair") == 0) { 
 			try {
@@ -320,7 +342,7 @@ int main(int argc, char* argv[]) {
 				std::printf("Enkripsi dibatalkan: %s\n", e.what());
 				return 1;
 			}
-		} else if(std::strcmp(chiper, "compare-speed") == 0) compare(content, METHOD_ENCRYPT);
+		} else if(std::strcmp(chiper, "compare-speed") == 0) compare(content, METHOD_DECRYPT);
 		else return usage(argv[1]);
 	} else {
 		return usage(argv[1]);
