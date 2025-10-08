@@ -42,7 +42,8 @@ int usage(const char* filename) {
     std::printf("Contoh penggunaan:\n");
     std::printf("   %s encrypt caesar\n", filename);
     std::printf("   %s decrypt playfair\n", filename);
-    std::printf("   %s compare-speed\n\n", filename);
+    std::printf("   %s encrypt compare-speed\n\n", filename);
+    std::printf("   %s decrypt compare-speed\n\n", filename);
 
     std::printf("Catatan:\n");
     std::printf(" - Saat ini hanya huruf (A-Z) yang dapat dienkripsi.\n");
